@@ -1,0 +1,38 @@
+language: java
+jdk:
+  - oraclejdk7
+env:
+  global:
+    secure: "d73adfc8af68c19aadab818670d3999ed4ce75cd"
+    
+before_script: 
+  - mkdir $HOME/artifacts
+  - cd src
+
+script: 
+  - javac -g SearchResult.java  
+  - javac -g DictionarySearch.java  
+
+after_success: 
+  - java -cp . DictionarySearch > solution.txt
+  - diff ../output.txt solution.txt > diff.txt
+  - cp ../output.txt $HOME/artifacts/output.txt
+  - cp solution.txt $HOME/artifacts/solution-${TRAVIS_PULL_REQUEST}.txt
+  - cp diff.txt $HOME/artifacts/diff-${TRAVIS_PULL_REQUEST}.txt
+  
+after_script: 
+  - cd $HOME
+  - git clone --depth=50 --branch=gh-pages git://github.com/${TRAVIS_REPO_SLUG}.git gh-pages > /dev/null
+  - cd gh-pages
+  - git checkout -fq gh-pages
+  - mkdir output
+  - cp $HOME/artifacts/* output
+  - dir output
+  - git config --global user.email "viperguynaz@gmail.com"
+  - git config --global user.name "viperguynaz"
+  - git remote rm origin
+  - git remote add origin https://d73adfc8af68c19aadab818670d3999ed4ce75cd@github.com/${TRAVIS_REPO_SLUG}.git  
+  - git add . 
+  - git commit -m "Deploy to Github Pages"
+  - git push -fq origin gh-pages > /dev/null
+  
