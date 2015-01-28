@@ -7,6 +7,13 @@ Be able to implement and compare search methods
 - public static SearchResult sequentialSearch(String wordToFind)
 - public static SearchResult binarySearch(String wordToFind)
 
+### Questions
+- Given an ordered list with N elements:
+-- How many times will the sequential search loop execute to find an element at index X?
+-- How many times (approximately) will the sequential search loop execute to find an element at index X?
+-- How many times will the sequential searh loop execute to find the first element?  the last element?
+-- How many times (approximately) will the binary search loop execute to find the first element? the last element?
+
 ### Output
 The output from running the program should be identical to:
 ```
